@@ -1,35 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Nave = () => {
-    const [prevScrollPos, setPrevScrollPos] = useState(0);
-    const [visible, setVisible] = useState(true);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const location = useLocation();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.scrollY;
-            setVisible((prevScrollPos > currentScrollPos || currentScrollPos < 10) && !isMenuOpen);
-            setPrevScrollPos(currentScrollPos);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [prevScrollPos, isMenuOpen]);
-
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-        if (!isMenuOpen) {
-            setVisible(true);
-        }
     };
 
     const isActive = (path) => location.pathname === path;
 
     return (
-        
-        <nav className={`fixed w-full bg-[#0b2042] border-b border-[#753ce8] transition-all duration-300 z-50 ${visible ? 'top-0' : '-top-full'}`}>
+        <nav className="fixed w-full bg-[#0b2042] border-b border-[#753ce8] z-50 top-0">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}

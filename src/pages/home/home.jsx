@@ -1,207 +1,159 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGithub, FaTwitter, FaLinkedin, FaBehance } from 'react-icons/fa';
-import { RiArrowRightSFill, RiInstagramFill } from 'react-icons/ri';
+import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { RiArrowRightSFill, RiInstagramFill, RiTerminalBoxFill } from 'react-icons/ri';
 import { FaSquareThreads, FaSquareXTwitter } from 'react-icons/fa6';
 import { SiGumroad } from 'react-icons/si';
+import { VscFiles, VscSearch, VscSourceControl, VscExtensions, VscAccount, VscSettingsGear, VscClose } from 'react-icons/vsc';
 import BottomNav from '../../layouts/BottomNav';
 
 const Home = () => {
-    useEffect(() => {
-        const handleResize = () => {
-            document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                type: "spring",
-                stiffness: 100
-            }
-        }
-    };
+    const sidebarIcons = [
+        { icon: VscFiles, active: true },
+        { icon: VscSearch, active: false },
+        { icon: VscSourceControl, active: false },
+        { icon: VscExtensions, active: false },
+        { icon: VscAccount, active: false },
+        { icon: VscSettingsGear, active: false }
+    ];
 
     return (
         <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="min-h-[calc(100vh-2rem)] bg-gradient-to-br from-[#0b2042] via-[#0b2042] to-[#162e4d] px-4 sm:px-6 md:px-10 py-16 sm:py-20 relative overflow-hidden font-mono"
+            className="h-[calc(100vh-2rem)] bg-[#0b2042] text-gray-300 font-mono overflow-hidden flex flex-col md:flex-row mt-16"
         >
-            {/* Animated background elements */}
+            {/* VSCode Sidebar */}
             <motion.div 
-                className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1 }}
+                initial={{ x: -50 }}
+                animate={{ x: 0 }}
+                className="w-full md:w-12 h-12 md:h-auto bg-[#0b2042] border-b md:border-b-0 md:border-r border-[#753ce8]/20 flex flex-row md:flex-col items-center justify-around md:justify-start md:py-4"
             >
-                <motion.div 
-                    className="absolute top-20 left-10 w-64 h-64 bg-[#753ce8]/10 rounded-full blur-3xl"
-                    animate={{ 
-                        scale: [1, 1.2, 1],
-                        opacity: [0.1, 0.2, 0.1]
-                    }}
-                    transition={{
-                        duration: 8,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                />
-                <motion.div 
-                    className="absolute bottom-20 right-10 w-64 h-64 bg-[#4ec9b0]/10 rounded-full blur-3xl"
-                    animate={{ 
-                        scale: [1.2, 1, 1.2],
-                        opacity: [0.1, 0.2, 0.1]
-                    }}
-                    transition={{
-                        duration: 8,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                />
+                {sidebarIcons.map((item, index) => (
+                    <motion.div
+                        key={index}
+                        className={`p-2 cursor-pointer relative ${
+                            item.active ? 'text-white' : 'text-gray-500'
+                        }`}
+                        whileHover={{ scale: 1.1 }}
+                    >
+                        <item.icon className="text-xl" />
+                        {item.active && (
+                            <motion.div 
+                                layoutId="sidebar-active"
+                                className="absolute left-0 top-0 w-0.5 h-full bg-white"
+                            />
+                        )}
+                    </motion.div>
+                ))}
             </motion.div>
 
+            {/* File Explorer */}
             <motion.div 
-                className="max-w-4xl mx-auto relative z-10"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                className="w-48 border-r border-[#753ce8]/20 py-4 hidden md:block"
             >
-                {/* Introduction section */}
-                <motion.div className="space-y-6 mb-10" variants={itemVariants}>
-                    <motion.div 
-                        className="text-gray-400 text-sm sm:text-base md:text-lg inline-block"
-                        whileHover={{ scale: 1.05, x: 10 }}
-                    >
-                        Hi all. I am
-                    </motion.div>
-                    <motion.h1 
-                        className="text-4xl sm:text-5xl md:text-6xl lg:text-4xl font-bold bg-gradient-to-r from-white via-[#753ce8] to-[#1100fc] bg-clip-text text-transparent"
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ type: "spring", stiffness: 200 }}
-                    >
-                        Said Bourhabi
-                    </motion.h1>
-                    <motion.div 
-                        className="text-[#753ce8] text-xl sm:text-2xl md:text-3xl flex items-center group"
-                        whileHover={{ x: 10 }}
-                    >
-                        <motion.span
-                            animate={{ x: [0, 5, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity }}
-                        >
-                            <RiArrowRightSFill className="text-2xl sm:text-3xl md:text-4xl" />
-                        </motion.span>
-                        <span className="ml-2">Front-end developer</span>
-                    </motion.div>
-                </motion.div>
+                <div className="px-4 text-sm text-gray-400 mb-2">EXPLORER</div>
+                <div className="px-4 py-2 bg-[#753ce8]/10 text-white cursor-pointer">
+                    portfolio/
+                </div>
+                <div className="px-6 py-1 text-gray-400 cursor-pointer hover:bg-[#753ce8]/10">
+                    profile.js
+                </div>
+                <div className="px-6 py-1 text-gray-400 cursor-pointer hover:bg-[#753ce8]/10">
+                    contact.js
+                </div>
+            </motion.div>
 
-                {/* Info card */}
+            {/* Main Editor Area */}
+            <motion.div className="flex-1 flex flex-col overflow-hidden">
+                {/* Tabs */}
+                <div className="flex items-center border-b border-[#753ce8]/20 overflow-x-auto">
+                    <motion.div 
+                        className="flex items-center px-4 py-2 bg-[#0b2042] border-r border-[#753ce8]/20 space-x-2 whitespace-nowrap"
+                        whileHover={{ backgroundColor: 'rgba(117, 60, 232, 0.1)' }}
+                    >
+                        <span className="text-[#4ec9b0]">profile.js</span>
+                        <VscClose className="text-gray-500 hover:text-white cursor-pointer" />
+                    </motion.div>
+                </div>
+
+                {/* Code Area */}
                 <motion.div 
-                    className="space-y-8 bg-[#0b2042]/60 backdrop-blur-md p-8 rounded-lg border border-[#753ce8]/30 shadow-2xl"
-                    variants={itemVariants}
-                    whileHover={{ boxShadow: "0 0 30px rgba(117, 60, 232, 0.2)" }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="flex-1 p-2 sm:p-4 overflow-auto"
                 >
-                    {/* Contact Information */}
-                    <motion.div className="space-y-4" variants={itemVariants}>
-                        <motion.div 
-                            className="flex flex-col sm:flex-row sm:items-center gap-2 hover:bg-[#162e4d]/50 p-4 rounded-lg transition-all duration-300"
-                            whileHover={{ scale: 1.02, x: 10 }}
-                        >
-                            <span className="text-[#753ce8] font-medium">const</span>
-                            <span className="text-[#4ec9b0]">telephoneNum</span>
-                            <span className="hidden sm:inline mx-2">=</span>
-                            <motion.span 
-                                className="text-[#ce9178] break-all select-all cursor-pointer"
-                                whileHover={{ color: "#ffffff" }}
-                            >
-                                "+212 619 005 822"
-                            </motion.span>
-                            <span>;</span>
-                        </motion.div>
+                    <pre className="text-xs sm:text-sm">
+                        <code>
+                            {`class Developer {
+    constructor() {
+        this.name = "Said Bourhabi";
+        this.role = "Frontend Developer";
+        this.location = "Morocco";
+        this.skills = [
+            "React",
+            "Next.js",
+            "TailwindCSS",
+            "TypeScript"
+        ];
+    }
 
-                        <motion.div 
-                            className="flex flex-col sm:flex-row sm:items-center gap-2 hover:bg-[#162e4d]/50 p-4 rounded-lg transition-all duration-300"
-                            whileHover={{ scale: 1.02, x: 10 }}
-                        >
-                            <span className="text-[#753ce8] font-medium">const</span>
-                            <span className="text-[#4ec9b0]">email</span>
-                            <span className="hidden sm:inline mx-2">=</span>
-                            <motion.span 
-                                className="text-[#ce9178] break-all select-all cursor-pointer"
-                                whileHover={{ color: "#ffffff" }}
-                            >
-                                "said.bourhabi@gmail.com"
-                            </motion.span>
-                            <span>;</span>
-                        </motion.div>
-                    </motion.div>
+    contact() {
+        return {
+            email: "said.bourhabi@gmail.com",
+            phone: "+212 619 005 822"
+        };
+    }
 
-                    {/* Social Links */}
-                    <motion.div className="space-y-6" variants={itemVariants}>
-                        <motion.div 
-                            className="text-gray-500 text-sm sm:text-base pl-4 border-l-2 border-[#753ce8]/30"
-                            whileHover={{ x: 10, borderColor: "#753ce8" }}
-                        >
-                            // my social profiles
-                        </motion.div>
-                        
-                        <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {[
-                                { icon: <SiGumroad />, link: "gumroad.com/saidbourhabi" },
-                                { icon: <RiInstagramFill />, link: "instagram.com/saidbourhabi" },
-                                { icon: <FaSquareThreads />, link: "threads.com/saidbourhabi" },
-                                { icon: <FaSquareXTwitter />, link: "twitter.com/saidbourhabi" }
-                            ].map((social, index) => (
+    social() {
+        return [
+            "github.com/saidbourhabi",
+            "twitter.com/saidbourhabi",
+            "instagram.com/saidbourhabi",
+            "threads.com/saidbourhabi"
+        ];
+    }
+}`.split('\n').map((line, i) => (
                                 <motion.div
-                                    key={index}
-                                    className="flex items-center gap-3 group hover:bg-[#162e4d]/50 p-4 rounded-lg"
-                                    whileHover={{ 
-                                        scale: 1.02,
-                                        x: 10,
-                                        backgroundColor: "rgba(22, 46, 77, 0.5)"
-                                    }}
+                                    key={i}
+                                    initial={{ x: -20, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: i * 0.05 }}
+                                    className="hover:bg-[#753ce8]/10 px-2 rounded whitespace-pre-wrap sm:whitespace-pre overflow-x-auto"
                                 >
-                                    <motion.div
-                                        className="text-[#753ce8] text-xl sm:text-2xl"
-                                        whileHover={{ scale: 1.2, rotate: 360 }}
-                                        transition={{ type: "spring", stiffness: 300 }}
-                                    >
-                                        {social.icon}
-                                    </motion.div>
-                                    <motion.a
-                                        href="#"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[#ce9178] hover:text-[#753ce8] transition-colors duration-200 text-sm sm:text-base truncate"
-                                        whileHover={{ color: "#753ce8" }}
-                                    >
-                                        {social.link}
-                                    </motion.a>
+                                    <span className="text-gray-500 mr-4">{i + 1}</span>
+                                    {line}
                                 </motion.div>
                             ))}
-                        </motion.div>
-                    </motion.div>
+                        </code>
+                    </pre>
+                </motion.div>
+
+                {/* Terminal */}
+                <motion.div 
+                    initial={{ y: 50 }}
+                    animate={{ y: 0 }}
+                    className="h-24 sm:h-32 border-t border-[#753ce8]/20"
+                >
+                    <div className="flex items-center px-4 py-2 border-b border-[#753ce8]/20 bg-[#0b2042]">
+                        <RiTerminalBoxFill className="text-[#753ce8] mr-2" />
+                        <span className="text-sm">Terminal</span>
+                    </div>
+                    <div className="p-2 sm:p-4 font-mono text-xs sm:text-sm overflow-x-auto">
+                        <div className="flex items-center space-x-2 whitespace-nowrap">
+                            <span className="text-[#753ce8]">→</span>
+                            <span>const developer = new Developer();</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-[#4ec9b0] whitespace-nowrap">
+                            <span>←</span>
+                            <span>Ready to collaborate!</span>
+                        </div>
+                    </div>
                 </motion.div>
             </motion.div>
+
             <BottomNav />
         </motion.div>
     );
