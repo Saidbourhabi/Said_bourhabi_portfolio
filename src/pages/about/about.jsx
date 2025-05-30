@@ -46,7 +46,7 @@ const About = () => {
     const toolsData = [
         { icon: <FaWindows className="text-xl" />, name: "Windows" },
         { icon: <FaLinux className="text-xl" />, name: "Linux" },
-        { icon: <SiAdobecreativecloud className="text-xl" />, name: "Adobe Suite" },
+        { icon: <SiAdobecreativecloud className="text-xl" />, name: "Adobe Creative" },
         { icon: <SiFigma className="text-xl" />, name: "Figma" }
     ];
 

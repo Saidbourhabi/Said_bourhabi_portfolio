@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGithub, FaTwitter, FaLinkedin, FaBehance } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaBehance } from 'react-icons/fa';
 import { BiGitBranch } from 'react-icons/bi';
 
 const BottomNav = () => {

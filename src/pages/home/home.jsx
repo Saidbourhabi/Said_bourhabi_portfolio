@@ -102,7 +102,7 @@ const Home = () => {
 
     contact() {
         return {
-            email: "said.bourhabi@gmail.com",
+            email: "abousaid11araqi@gmail.com",
             phone: "+212 619 005 822"
         };
     }
